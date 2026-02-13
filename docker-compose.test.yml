@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - observability-net
 
   ollama:
     image: ollama/ollama:0.15.2
@@ -32,6 +34,8 @@ services:
         sleep 5
         ollama pull llama3.2
         wait
+    networks:
+      - observability-net
 
   pgadmin:
     image: dpage/pgadmin4:8
@@ -46,11 +50,13 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    networks:
+      - observability-net
 
   backend:
     build:
       context: https://github.com/ezzine-mouhamed/observability_project-backend.git
-      dockerfile: Dockerfile
+      dockerfile: deploy/Dockerfile
       target: tester
     container_name: observability-backend
     ports:
@@ -65,8 +71,28 @@ services:
     volumes:
       - ../logs:/backend/logs
     restart: unless-stopped
+    networks:
+      - observability-net
+
+  frontend:
+    build:
+      context: https://github.com/ezzine-mouhamed/observability_project-frontend.git
+      dockerfile: deploy/Dockerfile
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:5000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - observability-net
 
 volumes:
   postgres_data:
   ollama_data:
   pgadmin_data:
+
+networks:
+  observability-net:
+    driver: bridge
