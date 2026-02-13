@@ -54,7 +54,7 @@ services:
       - observability-net
 
   backend:
-    image: devilitself/observability-backend:latest
+    image: devilitself/observability-backend:1.0.0
     container_name: observability-backend
     ports:
       - "5000:5000"
@@ -72,7 +72,7 @@ services:
       - observability-net
 
   frontend:
-    image: devilitself/observability-frontend:latest
+    image: devilitself/observability-frontend:1.0.0
     environment:
       NEXT_PUBLIC_API_URL: /api
     ports:
@@ -82,3 +82,12 @@ services:
     networks:
       - observability-net
     restart: unless-stopped
+
+volumes:
+  postgres_data:
+  ollama_data:
+  pgadmin_data:
+
+networks:
+  observability-net:
+    driver: bridge
