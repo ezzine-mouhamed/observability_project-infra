@@ -49,8 +49,8 @@ services:
 
   backend:
     build:
-      context: ..
-      dockerfile: deploy/backend/Dockerfile
+      context: https://github.com/ezzine-mouhamed/observability_project-backend.git
+      dockerfile: Dockerfile
       target: production
     container_name: observability-backend
     ports:
