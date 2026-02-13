@@ -54,10 +54,7 @@ services:
       - observability-net
 
   backend:
-    build:
-      context: https://github.com/ezzine-mouhamed/observability_project-backend.git
-      dockerfile: deploy/Dockerfile
-      target: production
+    image: devilitself/observability-backend:latest
     container_name: observability-backend
     ports:
       - "5000:5000"
@@ -75,24 +72,13 @@ services:
       - observability-net
 
   frontend:
-    build:
-      context: https://github.com/ezzine-mouhamed/observability_project-frontend.git
-      dockerfile: deploy/Dockerfile
+    image: devilitself/observability-frontend:latest
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:5000
+      NEXT_PUBLIC_API_URL: /api
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    restart: unless-stopped
     networks:
       - observability-net
-
-volumes:
-  postgres_data:
-  ollama_data:
-  pgadmin_data:
-
-networks:
-  observability-net:
-    driver: bridge
+    restart: unless-stopped
