@@ -73,6 +73,7 @@ services:
 
   frontend:
     image: devilitself/observability-frontend:1.0.0
+    container_name: observability-frontend
     environment:
       NEXT_PUBLIC_API_URL: /api
     ports:
