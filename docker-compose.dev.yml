@@ -54,7 +54,9 @@ services:
       - observability-net
 
   backend:
-    image: devilitself/observability-backend:1.0.3
+    build:
+      context: ../observability_project_backend
+      dockerfile: deploy/Dockerfile
     container_name: observability-backend
     ports:
       - "5000:5000"
@@ -72,7 +74,9 @@ services:
       - observability-net
 
   frontend:
-    image: devilitself/observability-frontend:1.0.2
+    build:
+      context: ../observability_project_frontend
+      dockerfile: deploy/Dockerfile
     container_name: observability-frontend
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:5000/api
