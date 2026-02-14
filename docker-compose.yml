@@ -72,7 +72,7 @@ services:
       - observability-net
 
   frontend:
-    image: devilitself/observability-frontend:1.0.0
+    image: devilitself/observability-frontend:1.0.1
     container_name: observability-frontend
     environment:
       NEXT_PUBLIC_API_URL: /api
